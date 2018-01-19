@@ -32,4 +32,20 @@ public class GuestBusiness {
     public GuestEntity load(int mGuestId) {
         return this.mGuestRespository.load(mGuestId);
     }
+
+
+
+    public boolean update(GuestEntity entityLoad) {
+
+        return this.mGuestRespository.update(entityLoad);
+
+    }
+
+    public List<GuestEntity> getPresent() {
+        return this.mGuestRespository.getGuestsPresents();
+    }
+
+    public List<GuestEntity> getAbsent() {
+        return this.mGuestRespository.getGuestsAbsent();
+    }
 }

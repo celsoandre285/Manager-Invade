@@ -17,7 +17,8 @@ public class GuestFormActivity extends AppCompatActivity implements View.OnClick
 
     private ViewHolder mViewHolder = new ViewHolder();
     private GuestBusiness mGuestBusiness;
-    private int mGuestId;
+    private int mGuestId = 0;
+    private GuestEntity entityLoad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,15 +45,15 @@ public class GuestFormActivity extends AppCompatActivity implements View.OnClick
         if (bundle != null){
             this.mGuestId =  bundle.getInt(GuestConstants.BundleConstants.GUEST_ID);
 
-            GuestEntity entity = this.mGuestBusiness.load(this.mGuestId);
+            entityLoad = this.mGuestBusiness.load(this.mGuestId);
 
-            this.mViewHolder.mEditText.setText(entity.getName());
+            this.mViewHolder.mEditText.setText(entityLoad.getName());
 
-            if (entity.getConfirmed() == GuestConstants.CONFIRMATION.NOT_CONFIRMED){
+            if (entityLoad.getConfirmed() == GuestConstants.CONFIRMATION.NOT_CONFIRMED){
                 this.mViewHolder.mRadioButtonNotConfirmed.setChecked(true);
-            }else if (entity.getConfirmed() == GuestConstants.CONFIRMATION.PRESENT){
+            }else if (entityLoad.getConfirmed() == GuestConstants.CONFIRMATION.PRESENT){
                 this.mViewHolder.mRadioButtonPresence.setChecked(true);
-            }else if (entity.getConfirmed() == GuestConstants.CONFIRMATION.ABSENT){
+            }else if (entityLoad.getConfirmed() == GuestConstants.CONFIRMATION.ABSENT){
                 this.mViewHolder.mRadioButtonAbsent.setChecked(true);
             }
 
@@ -69,8 +70,38 @@ public class GuestFormActivity extends AppCompatActivity implements View.OnClick
         int id = view.getId();
 
         if (id == R.id.btnSave){
-            this.handleSave();
+            if (this.entityLoad == null) {
+                this.handleSave();
+            }else{
+                this.update();
+            }
         }
+
+    }
+
+    private void update() {
+
+        if (!this.validationSalve()){
+            return;
+        }
+
+        entityLoad.setName(this.mViewHolder.mEditText.getText().toString());
+
+        if (this.mViewHolder.mRadioButtonNotConfirmed.isChecked()){
+            entityLoad.setConfirmed(GuestConstants.CONFIRMATION.NOT_CONFIRMED);
+        }else if (this.mViewHolder.mRadioButtonPresence.isChecked()){
+            entityLoad.setConfirmed(GuestConstants.CONFIRMATION.PRESENT);
+        }else if (this.mViewHolder.mRadioButtonAbsent.isChecked()) {
+            entityLoad.setConfirmed(GuestConstants.CONFIRMATION.ABSENT);
+        }
+
+        if (this.mGuestBusiness.update(entityLoad)){
+            Toast.makeText(this, "Convite atualizado com sucesso!", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "Convite nao atualizado!", Toast.LENGTH_SHORT).show();
+        }
+
+
 
     }
 
@@ -81,6 +112,7 @@ public class GuestFormActivity extends AppCompatActivity implements View.OnClick
         }
 
         GuestEntity guestEntity = new GuestEntity();
+
         guestEntity.setName(this.mViewHolder.mEditText.getText().toString());
 
         if (this.mViewHolder.mRadioButtonNotConfirmed.isChecked()){

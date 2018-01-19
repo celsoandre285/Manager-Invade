@@ -29,8 +29,7 @@ public class AllInvatedFragment extends Fragment {
     private ViewHolder mViewHolder = new ViewHolder();
 
     private GuestBusiness mGuestBusiness;
-
-
+    private GuestListAdapter adapter;
 
 
     @Override
@@ -51,7 +50,20 @@ public class AllInvatedFragment extends Fragment {
         //obter o RecycleView
         this.mViewHolder.mRecyclerAllInvated = (RecyclerView) view.findViewById(R.id.rcv_All_Invated);
 
-        this.mGuestBusiness = new GuestBusiness(context);
+
+
+        return view;
+    }
+
+    private static class ViewHolder{
+        RecyclerView mRecyclerAllInvated;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        this.mGuestBusiness = new GuestBusiness(getContext());
 
         OnGuestListenerInteractionListener listener = new OnGuestListenerInteractionListener() {
             @Override
@@ -59,7 +71,7 @@ public class AllInvatedFragment extends Fragment {
 
                 Bundle mBundle = new Bundle();
                 mBundle.putInt(GuestConstants.BundleConstants.GUEST_ID, position);
-                Intent intent  =  new Intent(context, GuestFormActivity.class);
+                Intent intent  =  new Intent(getContext(), GuestFormActivity.class);
                 intent.putExtras(mBundle);
 
                 startActivity(intent);
@@ -76,18 +88,11 @@ public class AllInvatedFragment extends Fragment {
         List<GuestEntity> guestEntityList = this.mGuestBusiness.getInvated();
 
         //definir o adapter
-        GuestListAdapter adapter = new GuestListAdapter(guestEntityList, listener);
+        adapter = new GuestListAdapter(guestEntityList, listener);
         this.mViewHolder.mRecyclerAllInvated.setAdapter(adapter);
 
         //Definir Layout
-        this.mViewHolder.mRecyclerAllInvated.setLayoutManager(new LinearLayoutManager(context));
+        this.mViewHolder.mRecyclerAllInvated.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        return view;
     }
-
-    private static class ViewHolder{
-        RecyclerView mRecyclerAllInvated;
-    }
-
-
 }
