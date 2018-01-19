@@ -4,10 +4,9 @@
     android:layout_height="match_parent"
     tools:context="com.example.desenvolvedor2015.invatedmanager.fragments.AllInvatedFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="all invated" />
+   <android.support.v7.widget.RecyclerView
+       android:id="@+id/rcv_All_Invated"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"/>
 
 </FrameLayout>

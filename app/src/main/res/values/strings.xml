@@ -16,4 +16,7 @@
     <string name="presente">presente</string>
     <string name="nao_confirmado">nao confirmado</string>
     <string name="btnSave">Salvar</string>
+    <string name="nome_obrigatorio">Nome do Obrigatório</string>
+    <string name="convidado_salvo">Convidado salvo com sucesso!</string>
+    <string name="convidado_nao_salvo">Erro ao salvar registro do convidado!</string>
 </resources>

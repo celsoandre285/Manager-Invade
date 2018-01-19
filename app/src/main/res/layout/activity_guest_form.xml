@@ -22,18 +22,22 @@
     </android.support.design.widget.TextInputLayout>
 
     <RadioGroup
+        android:id="@+id/radio_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <RadioButton
+            android:id="@+id/radio_button_not_confirmed"
             android:layout_width="match_parent"
             android:text="@string/nao_confirmado"
             android:layout_height="wrap_content" />
         <RadioButton
+            android:id="@+id/radio_button_present"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/presente"/>
         <RadioButton
+            android:id="@+id/radio_button_absent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/ausente"/>
@@ -41,6 +45,7 @@
     </RadioGroup>
 
     <Button
+    android:id="@+id/btnSave"
     android:text="@string/btnSave"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" />
