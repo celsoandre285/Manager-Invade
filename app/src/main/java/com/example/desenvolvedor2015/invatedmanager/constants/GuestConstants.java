@@ -10,6 +10,7 @@ public class GuestConstants {
         public static final String GUEST_ID ="guesId";
         public static final String GUEST_NAME ="guesName";
         public static final String GUEST_PRESENCE ="guesPresence";
+        public static final String GUEST_DOCUMENTATION = "documentation";
 
     }
 

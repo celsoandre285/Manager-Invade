@@ -8,6 +8,7 @@ public class GuestEntity {
     private int id;
     private String name;
     private int confirmed;
+    private String doc;
 
 
     public int getId() {
@@ -32,5 +33,13 @@ public class GuestEntity {
 
     public void setConfirmed(int confirmed) {
         this.confirmed = confirmed;
+    }
+
+    public String getDoc() {
+        return doc;
+    }
+
+    public void setDoc(String doc) {
+        this.doc = doc;
     }
 }

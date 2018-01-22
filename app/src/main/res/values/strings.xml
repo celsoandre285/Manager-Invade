@@ -22,4 +22,5 @@
     <string name="msg_sucess_update">Convite atualizado com sucesso!</string>
     <string name="msg_unsucess_update">Convite nao atualizado!</string>
     <string name="total">Total</string>
+    <string name="documento">Documento</string>
 </resources>

@@ -107,7 +107,8 @@ public class GuestRespository {
             String[] projection = {
                     DataBaseConstants.GUEST.COLUMNS.ID,
                     DataBaseConstants.GUEST.COLUMNS.NAME,
-                    DataBaseConstants.GUEST.COLUMNS.PRESENCE
+                    DataBaseConstants.GUEST.COLUMNS.PRESENCE,
+                    DataBaseConstants.GUEST.COLUMNS.DOCUMENTATION
             };
 
             String selection = DataBaseConstants.GUEST.COLUMNS.ID + "=?";
@@ -122,6 +123,7 @@ public class GuestRespository {
                 entity.setId(cursor.getInt(cursor.getColumnIndex(DataBaseConstants.GUEST.COLUMNS.ID)));
                 entity.setName(cursor.getString(cursor.getColumnIndex(DataBaseConstants.GUEST.COLUMNS.NAME)));
                 entity.setConfirmed(cursor.getInt(cursor.getColumnIndex(DataBaseConstants.GUEST.COLUMNS.PRESENCE)));
+                entity.setDoc(cursor.getString(cursor.getColumnIndex(DataBaseConstants.GUEST.COLUMNS.DOCUMENTATION)));
             }
 
             if (cursor != null){
@@ -150,6 +152,7 @@ public class GuestRespository {
 
             cv.put(DataBaseConstants.GUEST.COLUMNS.NAME, entityLoad.getName());
             cv.put(DataBaseConstants.GUEST.COLUMNS.PRESENCE, entityLoad.getConfirmed());
+            cv.put(DataBaseConstants.GUEST.COLUMNS.DOCUMENTATION, entityLoad.getDoc());
 
             String selection = DataBaseConstants.GUEST.COLUMNS.ID + "=?";
 
@@ -179,7 +182,8 @@ public class GuestRespository {
 
                     DataBaseConstants.GUEST.COLUMNS.ID,
                     DataBaseConstants.GUEST.COLUMNS.NAME,
-                    DataBaseConstants.GUEST.COLUMNS.PRESENCE
+                    DataBaseConstants.GUEST.COLUMNS.PRESENCE,
+                    DataBaseConstants.GUEST.COLUMNS.DOCUMENTATION
             };
 
             String selection = DataBaseConstants.GUEST.COLUMNS.PRESENCE + "=?";
@@ -196,6 +200,7 @@ public class GuestRespository {
                     entity.setId(cursor.getInt(cursor.getColumnIndex(DataBaseConstants.GUEST.COLUMNS.ID)));
                     entity.setName(cursor.getString(cursor.getColumnIndex(DataBaseConstants.GUEST.COLUMNS.NAME)));
                     entity.setConfirmed(cursor.getInt(cursor.getColumnIndex(DataBaseConstants.GUEST.COLUMNS.PRESENCE)));
+                    entity.setDoc(cursor.getString(cursor.getColumnIndex(DataBaseConstants.GUEST.COLUMNS.DOCUMENTATION)));
 
                     list.add(entity);
 
@@ -229,7 +234,8 @@ public class GuestRespository {
 
                     DataBaseConstants.GUEST.COLUMNS.ID,
                     DataBaseConstants.GUEST.COLUMNS.NAME,
-                    DataBaseConstants.GUEST.COLUMNS.PRESENCE
+                    DataBaseConstants.GUEST.COLUMNS.PRESENCE,
+                    DataBaseConstants.GUEST.COLUMNS.DOCUMENTATION
             };
 
             String selection = DataBaseConstants.GUEST.COLUMNS.PRESENCE + " =? ";
@@ -245,6 +251,7 @@ public class GuestRespository {
                     entity.setId(cursor.getInt(cursor.getColumnIndex(DataBaseConstants.GUEST.COLUMNS.ID)));
                     entity.setName(cursor.getString(cursor.getColumnIndex(DataBaseConstants.GUEST.COLUMNS.NAME)));
                     entity.setConfirmed(cursor.getInt(cursor.getColumnIndex(DataBaseConstants.GUEST.COLUMNS.PRESENCE)));
+                    entity.setDoc(cursor.getString(cursor.getColumnIndex(DataBaseConstants.GUEST.COLUMNS.DOCUMENTATION)));
 
                     entities.add(entity);
                 }

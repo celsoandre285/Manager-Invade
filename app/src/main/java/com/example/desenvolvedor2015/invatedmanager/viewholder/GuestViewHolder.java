@@ -15,9 +15,9 @@ import com.example.desenvolvedor2015.invatedmanager.listener.OnGuestListenerInte
 
 public class GuestViewHolder extends RecyclerView.ViewHolder {
 
-    TextView mTextName;
-    ImageView imgRow;
-    Context mContext;
+    private TextView mTextName;
+    private ImageView imgRow;
+    private Context mContext;
 
     public GuestViewHolder(View itemView, Context mContext) {
         super(itemView);
@@ -65,7 +65,18 @@ public class GuestViewHolder extends RecyclerView.ViewHolder {
 
             @Override
             public void onClick(View view) {
-                listener.OnClickImage(imgRow.getId());
+                new AlertDialog.Builder(mContext)
+                        .setTitle("Remocao de convidado")
+                        .setMessage("Deseja remover o convidado")
+                        .setIcon(R.drawable.ic_menu_camera)
+                        .setPositiveButton("sim", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                listener.OnDeleteClick(entity.getId());
+                            }
+                        })
+                        .setNeutralButton("Nao", null)
+                        .show();
             }
         });
 

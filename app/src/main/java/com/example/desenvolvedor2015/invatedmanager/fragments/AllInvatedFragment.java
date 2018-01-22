@@ -77,8 +77,11 @@ public class AllInvatedFragment extends Fragment {
             public void OnDeleteClick(int id) {
                 if(mGuestBusiness.removeItem(id)){
 
+                    loadDashBord();
+                    loadGuests();
+
                     Toast.makeText(getContext(), "Item removido com sucesso!", Toast.LENGTH_SHORT).show();
-                    adapter.notifyDataSetChanged();
+
 
                 }else{
                     Toast.makeText(getContext(), "Item nao removido!", Toast.LENGTH_SHORT).show();

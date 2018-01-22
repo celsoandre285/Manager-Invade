@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.desenvolvedor2015.invatedmanager.R;
 import com.example.desenvolvedor2015.invatedmanager.activities.GuestFormActivity;
@@ -49,13 +50,13 @@ public class PresentFragment extends Fragment {
         //
         this.mViewHolder.mRecyclePresent = (RecyclerView) view.findViewById(R.id.rcv_present);
 
-         listener = new OnGuestListenerInteractionListener() {
+        this.listener = new OnGuestListenerInteractionListener() {
             @Override
             public void OnListClick(int position) {
 
                 Bundle mBundle = new Bundle();
                 mBundle.putInt(GuestConstants.BundleConstants.GUEST_ID, position);
-                Intent intent  =  new Intent(getContext(), GuestFormActivity.class);
+                Intent intent = new Intent(getContext(), GuestFormActivity.class);
                 intent.putExtras(mBundle);
 
                 startActivity(intent);
@@ -64,7 +65,19 @@ public class PresentFragment extends Fragment {
             }
 
             @Override
-            public void OnDeleteClick(int position) {
+            public void OnDeleteClick(int id) {
+                if(mGuestBusiness.removeItem(id)){
+
+
+                    loadGuests();
+
+                    Toast.makeText(getContext(), "Item removido com sucesso!", Toast.LENGTH_SHORT).show();
+
+
+                }else{
+                    Toast.makeText(getContext(), "Item nao removido!", Toast.LENGTH_SHORT).show();
+                }
+
 
             }
 
@@ -89,16 +102,15 @@ public class PresentFragment extends Fragment {
         this.loadGuests();
 
 
-
     }
 
     private void loadGuests() {
-        List<GuestEntity> guestEntityList =this.mGuestBusiness.getPresent();
+        List<GuestEntity> guestEntityList = this.mGuestBusiness.getPresent();
         GuestListAdapter adapter = new GuestListAdapter(guestEntityList, listener);
         this.mViewHolder.mRecyclePresent.setAdapter(adapter);
     }
 
-    private static class ViewHolder{
+    private static class ViewHolder {
         RecyclerView mRecyclePresent;
     }
 

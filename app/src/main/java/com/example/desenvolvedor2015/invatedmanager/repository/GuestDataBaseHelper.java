@@ -16,7 +16,7 @@ public class GuestDataBaseHelper extends SQLiteOpenHelper {
 
     private final String TAG = "GuestDataBaseHelper";
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "meusconvidados.db";
 
     private static final String SQL_CREATE_TABLE_GUEST =
@@ -44,11 +44,25 @@ public class GuestDataBaseHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        Log.i(TAG, "onUpgrade: : v"+ i +"for  v  "+i1);
+    public void onUpgrade(SQLiteDatabase db, int i, int update) {
+        Log.i(TAG, "onUpgrade: : v"+ i +"for  v  "+update);
 
-        db.execSQL(DROP_TABLE_GUESTS);
-        db.execSQL(SQL_CREATE_TABLE_GUEST);
+        //db.execSQL(DROP_TABLE_GUESTS);
+        //db.execSQL(SQL_CREATE_TABLE_GUEST);
+
+        switch (update){
+            case 1:
+                Log.i(TAG, "onUpgrade: ok");
+
+            case 2:
+                String alterTable = "alter table "+DataBaseConstants.GUEST.TABLE_NAME + " add "+ DataBaseConstants.GUEST.COLUMNS.DOCUMENTATION + " text" ;
+
+                db.execSQL(alterTable);
+
+                break;
+            default:
+
+        }
 
     }
 }

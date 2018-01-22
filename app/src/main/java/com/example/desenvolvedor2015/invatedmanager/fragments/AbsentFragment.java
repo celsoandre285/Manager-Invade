@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.desenvolvedor2015.invatedmanager.R;
 import com.example.desenvolvedor2015.invatedmanager.activities.GuestFormActivity;
@@ -44,20 +45,18 @@ public class AbsentFragment extends Fragment {
         guestBusiness = new GuestBusiness(context);
 
 
-
-
-        View view =  inflater.inflate(R.layout.fragment_absent, container, false);
+        View view = inflater.inflate(R.layout.fragment_absent, container, false);
 
         //
         this.mViewHolder.recyclerAbsent = view.findViewById(R.id.rcv_absent);
 
-         listener = new OnGuestListenerInteractionListener() {
+        this.listener = new OnGuestListenerInteractionListener() {
             @Override
             public void OnListClick(int position) {
 
                 Bundle mBundle = new Bundle();
                 mBundle.putInt(GuestConstants.BundleConstants.GUEST_ID, position);
-                Intent intent  =  new Intent(getContext(), GuestFormActivity.class);
+                Intent intent = new Intent(getContext(), GuestFormActivity.class);
                 intent.putExtras(mBundle);
 
                 startActivity(intent);
@@ -66,7 +65,19 @@ public class AbsentFragment extends Fragment {
             }
 
             @Override
-            public void OnDeleteClick(int position) {
+            public void OnDeleteClick(int id) {
+                if(guestBusiness.removeItem(id)){
+
+
+                    loadGuests();
+
+                    Toast.makeText(getContext(), "Item removido com sucesso!", Toast.LENGTH_SHORT).show();
+
+
+                }else{
+                    Toast.makeText(getContext(), "Item nao removido!", Toast.LENGTH_SHORT).show();
+                }
+
 
             }
 
@@ -75,8 +86,6 @@ public class AbsentFragment extends Fragment {
 
             }
         };
-
-
 
 
         // setando layout
@@ -97,7 +106,7 @@ public class AbsentFragment extends Fragment {
 
     private void loadGuests() {
 
-        List<GuestEntity>list = guestBusiness.getAbsent();
+        List<GuestEntity> list = guestBusiness.getAbsent();
 
         //setando o adapter
         GuestListAdapter adapter = new GuestListAdapter(list, listener);
@@ -105,11 +114,9 @@ public class AbsentFragment extends Fragment {
 
     }
 
-    private static class ViewHolder{
+    private static class ViewHolder {
         RecyclerView recyclerAbsent;
     }
-
-
 
 
 }

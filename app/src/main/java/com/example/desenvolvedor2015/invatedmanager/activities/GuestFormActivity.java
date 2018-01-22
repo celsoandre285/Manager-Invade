@@ -27,6 +27,7 @@ public class GuestFormActivity extends AppCompatActivity implements View.OnClick
 
 
         this.mViewHolder.mEditText = this.findViewById(R.id.edtName);
+        this.mViewHolder.mEditTxtDoc = this.findViewById(R.id.edtDoc);
         this.mViewHolder.mButton = this.findViewById(R.id.btnSave);
         this.mViewHolder.mRadioButtonAbsent = this.findViewById(R.id.radio_button_absent);
         this.mViewHolder.mRadioButtonNotConfirmed = this.findViewById(R.id.radio_button_not_confirmed);
@@ -48,6 +49,8 @@ public class GuestFormActivity extends AppCompatActivity implements View.OnClick
             entityLoad = this.mGuestBusiness.load(this.mGuestId);
 
             this.mViewHolder.mEditText.setText(entityLoad.getName());
+
+            this.mViewHolder.mEditTxtDoc.setText(entityLoad.getDoc());
 
             if (entityLoad.getConfirmed() == GuestConstants.CONFIRMATION.NOT_CONFIRMED){
                 this.mViewHolder.mRadioButtonNotConfirmed.setChecked(true);
@@ -89,6 +92,7 @@ public class GuestFormActivity extends AppCompatActivity implements View.OnClick
         }
 
         entityLoad.setName(this.mViewHolder.mEditText.getText().toString());
+        entityLoad.setDoc(this.mViewHolder.mEditTxtDoc.getText().toString());
 
         if (this.mViewHolder.mRadioButtonNotConfirmed.isChecked()){
             entityLoad.setConfirmed(GuestConstants.CONFIRMATION.NOT_CONFIRMED);
@@ -120,6 +124,7 @@ public class GuestFormActivity extends AppCompatActivity implements View.OnClick
         GuestEntity guestEntity = new GuestEntity();
 
         guestEntity.setName(this.mViewHolder.mEditText.getText().toString());
+        guestEntity.setDoc(this.mViewHolder.mEditTxtDoc.getText().toString());
 
         if (this.mViewHolder.mRadioButtonNotConfirmed.isChecked()){
             guestEntity.setConfirmed(GuestConstants.CONFIRMATION.NOT_CONFIRMED);
@@ -170,6 +175,7 @@ public class GuestFormActivity extends AppCompatActivity implements View.OnClick
 
     public static class ViewHolder{
         EditText mEditText;
+        EditText mEditTxtDoc;
         Button mButton;
         RadioButton mRadioButtonAbsent;
         RadioButton mRadioButtonNotConfirmed;
