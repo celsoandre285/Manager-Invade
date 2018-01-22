@@ -34,7 +34,7 @@ public class GuestListAdapter extends RecyclerView.Adapter<GuestViewHolder> {
         View view = layoutInflater.inflate(R.layout.row_guest, parent, false);
 
 
-        return new GuestViewHolder(view);
+        return new GuestViewHolder(view, mContext);
     }
 
     @Override

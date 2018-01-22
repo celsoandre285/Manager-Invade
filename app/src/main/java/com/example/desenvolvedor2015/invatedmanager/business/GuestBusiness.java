@@ -3,6 +3,7 @@ package com.example.desenvolvedor2015.invatedmanager.business;
 import android.content.Context;
 
 import com.example.desenvolvedor2015.invatedmanager.constants.DataBaseConstants;
+import com.example.desenvolvedor2015.invatedmanager.entities.GuestCount;
 import com.example.desenvolvedor2015.invatedmanager.entities.GuestEntity;
 import com.example.desenvolvedor2015.invatedmanager.repository.GuestRespository;
 
@@ -47,5 +48,13 @@ public class GuestBusiness {
 
     public List<GuestEntity> getAbsent() {
         return this.mGuestRespository.getGuestsAbsent();
+    }
+
+    public boolean removeItem(int id) {
+        return this.mGuestRespository.removeItem(id);
+    }
+
+    public GuestCount loadDashBord() {
+        return this.mGuestRespository.loadDashBord();
     }
 }

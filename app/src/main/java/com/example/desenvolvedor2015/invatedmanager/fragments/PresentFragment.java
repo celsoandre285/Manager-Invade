@@ -26,8 +26,7 @@ public class PresentFragment extends Fragment {
 
     private ViewHolder mViewHolder = new ViewHolder();
     private GuestBusiness mGuestBusiness;
-
-
+    private OnGuestListenerInteractionListener listener;
 
 
     @Override
@@ -45,12 +44,12 @@ public class PresentFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_present, container, false);
 
         this.mGuestBusiness = new GuestBusiness(mContext);
-        List<GuestEntity> guestEntityList =this.mGuestBusiness.getPresent();
+
 
         //
         this.mViewHolder.mRecyclePresent = (RecyclerView) view.findViewById(R.id.rcv_present);
 
-        OnGuestListenerInteractionListener listener = new OnGuestListenerInteractionListener() {
+         listener = new OnGuestListenerInteractionListener() {
             @Override
             public void OnListClick(int position) {
 
@@ -68,16 +67,35 @@ public class PresentFragment extends Fragment {
             public void OnDeleteClick(int position) {
 
             }
+
+            @Override
+            public void OnClickImage(int id) {
+
+            }
         };
 
         //
-        GuestListAdapter adapter = new GuestListAdapter(guestEntityList, listener);
-        this.mViewHolder.mRecyclePresent.setAdapter(adapter);
+
 
         //
         this.mViewHolder.mRecyclePresent.setLayoutManager(new LinearLayoutManager(mContext));
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.loadGuests();
+
+
+
+    }
+
+    private void loadGuests() {
+        List<GuestEntity> guestEntityList =this.mGuestBusiness.getPresent();
+        GuestListAdapter adapter = new GuestListAdapter(guestEntityList, listener);
+        this.mViewHolder.mRecyclePresent.setAdapter(adapter);
     }
 
     private static class ViewHolder{

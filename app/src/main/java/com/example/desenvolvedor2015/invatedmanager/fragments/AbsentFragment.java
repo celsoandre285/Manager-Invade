@@ -26,6 +26,7 @@ public class AbsentFragment extends Fragment {
     private ViewHolder mViewHolder = new ViewHolder();
 
     private GuestBusiness guestBusiness;
+    private OnGuestListenerInteractionListener listener;
 
 
     @Override
@@ -43,14 +44,14 @@ public class AbsentFragment extends Fragment {
         guestBusiness = new GuestBusiness(context);
 
 
-        List<GuestEntity>list = guestBusiness.getAbsent();
+
 
         View view =  inflater.inflate(R.layout.fragment_absent, container, false);
 
         //
         this.mViewHolder.recyclerAbsent = view.findViewById(R.id.rcv_absent);
 
-        OnGuestListenerInteractionListener listener = new OnGuestListenerInteractionListener() {
+         listener = new OnGuestListenerInteractionListener() {
             @Override
             public void OnListClick(int position) {
 
@@ -68,18 +69,40 @@ public class AbsentFragment extends Fragment {
             public void OnDeleteClick(int position) {
 
             }
+
+            @Override
+            public void OnClickImage(int id) {
+
+            }
         };
 
 
-        //setando o adapter
-        GuestListAdapter adapter = new GuestListAdapter(list, listener);
-        this.mViewHolder.recyclerAbsent.setAdapter(adapter);
+
 
         // setando layout
         this.mViewHolder.recyclerAbsent.setLayoutManager(new LinearLayoutManager(context));
 
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        this.loadGuests();
+
+
+    }
+
+    private void loadGuests() {
+
+        List<GuestEntity>list = guestBusiness.getAbsent();
+
+        //setando o adapter
+        GuestListAdapter adapter = new GuestListAdapter(list, listener);
+        this.mViewHolder.recyclerAbsent.setAdapter(adapter);
+
     }
 
     private static class ViewHolder{

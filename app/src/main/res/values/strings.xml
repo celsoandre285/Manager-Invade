@@ -19,4 +19,7 @@
     <string name="nome_obrigatorio">Nome do Obrigatório</string>
     <string name="convidado_salvo">Convidado salvo com sucesso!</string>
     <string name="convidado_nao_salvo">Erro ao salvar registro do convidado!</string>
+    <string name="msg_sucess_update">Convite atualizado com sucesso!</string>
+    <string name="msg_unsucess_update">Convite nao atualizado!</string>
+    <string name="total">Total</string>
 </resources>

@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.example.desenvolvedor2015.invatedmanager.constants.DataBaseConstants;
 import com.example.desenvolvedor2015.invatedmanager.constants.GuestConstants;
+import com.example.desenvolvedor2015.invatedmanager.entities.GuestCount;
 import com.example.desenvolvedor2015.invatedmanager.entities.GuestEntity;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class GuestRespository {
     private GuestDataBaseHelper mGuestDataBaseHelper;
 
     public final String TAG = "GuestRespository";
+
 
     private GuestRespository(Context mContext){
         mGuestDataBaseHelper = new GuestDataBaseHelper(mContext);
@@ -230,9 +232,9 @@ public class GuestRespository {
                     DataBaseConstants.GUEST.COLUMNS.PRESENCE
             };
 
-            String selection = DataBaseConstants.GUEST.COLUMNS.PRESENCE + "=?";
+            String selection = DataBaseConstants.GUEST.COLUMNS.PRESENCE + " =? ";
 
-            String[] selectionArgs = {String.valueOf(GuestConstants.CONFIRMATION.NOT_CONFIRMED)};
+            String[] selectionArgs = {String.valueOf(GuestConstants.CONFIRMATION.ABSENT)};
 
             Cursor cursor = sqLiteDatabase.query(tableName, collumns, selection, selectionArgs, null, null, null);
 
@@ -258,5 +260,74 @@ public class GuestRespository {
         }
 
 
+    }
+
+    public boolean removeItem(int id) {
+        try{
+            SQLiteDatabase sqLiteDatabase = this.mGuestDataBaseHelper.getWritableDatabase();
+
+            String tableName = DataBaseConstants.GUEST.TABLE_NAME;
+            String whereClause = DataBaseConstants.GUEST.COLUMNS.ID + " =? ";
+            String[] stringArgs = {String.valueOf(id)};
+
+            sqLiteDatabase.delete(tableName, whereClause, stringArgs);
+
+            Log.i(TAG, "removido com sucesso: "+ id);
+
+            return true;
+
+
+        }catch (Exception e){
+            Log.e(TAG, "item nao foi removido "+ id );
+
+            return false;
+
+        }
+    }
+
+    public GuestCount loadDashBord() {
+        GuestCount guestCount = new GuestCount(0,0,0);
+        Cursor cursor;
+
+        try{
+
+            SQLiteDatabase sqLiteDatabase = this.mGuestDataBaseHelper.getWritableDatabase();
+
+            String queryPresence = "Select count(*) from " + DataBaseConstants.GUEST.TABLE_NAME + " where " + DataBaseConstants.GUEST.COLUMNS.PRESENCE + " = " + GuestConstants.CONFIRMATION.PRESENT;
+
+            cursor = sqLiteDatabase.rawQuery(queryPresence, null);
+
+            if (cursor != null && cursor.getCount()>0){
+                cursor.moveToFirst();
+                guestCount.setPresentCount(cursor.getInt(0));
+            }
+
+            String queryAbsent = "Select count(*) from " + DataBaseConstants.GUEST.TABLE_NAME + " where " + DataBaseConstants.GUEST.COLUMNS.PRESENCE + " = " + GuestConstants.CONFIRMATION.ABSENT;
+
+            cursor = sqLiteDatabase.rawQuery(queryAbsent, null);
+
+            if (cursor != null && cursor.getCount()>0){
+                cursor.moveToFirst();
+                guestCount.setAbsentCount(cursor.getInt(0));
+            }
+
+            String queryAll = "Select count(*) from " + DataBaseConstants.GUEST.TABLE_NAME;
+
+            cursor = sqLiteDatabase.rawQuery(queryAll, null);
+
+            if (cursor != null && cursor.getCount()>0){
+                cursor.moveToFirst();
+                guestCount.setAllInvatedCount(cursor.getInt(0));
+            }
+
+            if (cursor != null){
+                cursor.close();
+            }
+
+
+        }catch (Exception e){
+
+        }
+        return guestCount;
     }
 }

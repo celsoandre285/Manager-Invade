@@ -70,11 +70,14 @@ public class GuestFormActivity extends AppCompatActivity implements View.OnClick
         int id = view.getId();
 
         if (id == R.id.btnSave){
-            if (this.entityLoad == null) {
-                this.handleSave();
-            }else{
-                this.update();
-            }
+
+            this.handleSave();
+
+//            if (this.entityLoad == null) {
+//                this.handleSave();
+//            }else{
+//                this.update();
+//            }
         }
 
     }
@@ -96,10 +99,13 @@ public class GuestFormActivity extends AppCompatActivity implements View.OnClick
         }
 
         if (this.mGuestBusiness.update(entityLoad)){
-            Toast.makeText(this, "Convite atualizado com sucesso!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.msg_sucess_update, Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(this, "Convite nao atualizado!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.msg_unsucess_update, Toast.LENGTH_SHORT).show();
         }
+
+        //finalizando
+        finish();
 
 
 
@@ -123,13 +129,30 @@ public class GuestFormActivity extends AppCompatActivity implements View.OnClick
             guestEntity.setConfirmed(GuestConstants.CONFIRMATION.ABSENT);
         }
 
-        if(mGuestBusiness.insert(guestEntity)){
+        if (this.mGuestId == 0){
+            if(mGuestBusiness.insert(guestEntity)){
 
-            Toast.makeText(this, getString(R.string.convidado_salvo), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.convidado_salvo), Toast.LENGTH_SHORT).show();
+
+            }else{
+                Toast.makeText(this, getString(R.string.convidado_nao_salvo), Toast.LENGTH_SHORT).show();
+            }
 
         }else{
-            Toast.makeText(this, getString(R.string.convidado_nao_salvo), Toast.LENGTH_SHORT).show();
+
+            guestEntity.setId(this.mGuestId);
+
+            if(mGuestBusiness.update(guestEntity)){
+
+                Toast.makeText(this, getString(R.string.msg_sucess_update), Toast.LENGTH_SHORT).show();
+
+            }else{
+                Toast.makeText(this, getString(R.string.msg_unsucess_update), Toast.LENGTH_SHORT).show();
+            }
+
         }
+
+
 
         //finalizando activity
         finish();

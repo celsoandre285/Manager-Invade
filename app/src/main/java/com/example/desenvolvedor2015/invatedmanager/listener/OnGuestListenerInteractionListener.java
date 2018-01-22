@@ -6,7 +6,9 @@ package com.example.desenvolvedor2015.invatedmanager.listener;
 
 public interface OnGuestListenerInteractionListener {
 
-    void OnListClick(int position);
+    void OnListClick(int id);
 
-    void OnDeleteClick(int position);
+    void OnDeleteClick(int id);
+
+    void OnClickImage(int id);
 }
